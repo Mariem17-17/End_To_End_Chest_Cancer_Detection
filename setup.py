@@ -8,7 +8,7 @@ __version__ = "0.0.0"
 
 REPO_NAME = "End_To_End_Chest_Cancer_Detection"
 AUTHOR_USER_NAME = "Mariem17-17"
-SRC_REPO = "CNN_Classifier"
+SRC_REPO = "CNN_classifier"
 AUTHOR_EMAIL = "mariembenmehrez56@gmail.com"
 
 
