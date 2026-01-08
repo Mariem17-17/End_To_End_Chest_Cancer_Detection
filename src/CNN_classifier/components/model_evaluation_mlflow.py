@@ -53,23 +53,21 @@ class Evaluation:
         scores = {"loss": self.score[0], "accuracy": self.score[1]}
         save_json(path=Path("scores.json"), data=scores)
 
-    
+        
     def log_into_mlflow(self):
+        import os 
         mlflow.set_registry_uri(self.config.mlflow_uri)
         tracking_url_type_store = urlparse(mlflow.get_tracking_uri()).scheme
-        
+        if tracking_url_type_store not in ["file", "sqlite"]:
+            os.environ["MLFLOW_TRACKING_USERNAME"] = os.environ.get("MLFLOW_TRACKING_USERNAME", "Mariem17-17")
+            os.environ["MLFLOW_TRACKING_PASSWORD"] = os.environ.get("MLFLOW_TRACKING_PASSWORD", "b2cb51c880480b3e7ecabc262adbc2bd575b7555")
+
         with mlflow.start_run():
             mlflow.log_params(self.config.all_params)
             mlflow.log_metrics(
                 {"loss": self.score[0], "accuracy": self.score[1]}
             )
-            # Model registry does not work with file store
-            if tracking_url_type_store != "file":
-
-                # Register the model
-                # There are other ways to use the Model Registry, which depends on the use case,
-                # please refer to the doc for more information:
-                # https://mlflow.org/docs/latest/model-registry.html#api-workflow
+            if tracking_url_type_store != "file" and os.environ.get("MLFLOW_TRACKING_PASSWORD"):
                 mlflow.keras.log_model(self.model, "model", registered_model_name="VGG16Model")
             else:
                 mlflow.keras.log_model(self.model, "model")

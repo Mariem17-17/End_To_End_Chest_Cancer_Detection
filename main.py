@@ -5,10 +5,6 @@ from CNN_classifier.pipeline.stage_03_model_trainer import ModelTrainingPipeline
 from CNN_classifier.pipeline.stage_04_model_evaluation import EvaluationPipeline
 import os
 
-os.environ["MLFLOW_TRACKING_URI"]="https://dagshub.com/Mariem17-17/End_To_End_Chest_Cancer_Detection.mlflow"
-os.environ["MLFLOW_TRACKING_USERNAME"]="Mariem17-17"
-os.environ["MLFLOW_TRACKING_PASSWORD"]="b2cb51c880480b3e7ecabc262adbc2bd575b7555"
-
 STAGE_NAME = "Data Ingestion stage"
 
 try:
