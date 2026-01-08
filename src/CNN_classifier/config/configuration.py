@@ -1,7 +1,7 @@
 import os
 from CNN_classifier.constants import *
-from CNN_classifier.utils.commons import read_yaml, create_directories
-from CNN_classifier.entity.config_entity import (DataIngestionConfig, PrepareBaseModelConfig, TrainingConfig)
+from CNN_classifier.utils.commons import read_yaml, create_directories, save_json
+from CNN_classifier.entity.config_entity import (DataIngestionConfig, PrepareBaseModelConfig, TrainingConfig, EvaluationConfig)
 
 class ConfigurationManager:
     def __init__(
@@ -71,3 +71,14 @@ class ConfigurationManager:
         )
 
         return training_config
+    
+    def get_evaluation_config(self) -> EvaluationConfig:
+        eval_config = EvaluationConfig(
+            path_of_model="artifacts/training/model.h5",
+            training_data="artifacts/data_ingestion/Chest-CT-Scan-data",
+            mlflow_uri="https://dagshub.com/Mariem17-17/End_To_End_Chest_Cancer_Detection.mlflow",
+            all_params=self.params,
+            params_image_size=self.params.IMAGE_SIZE,
+            params_batch_size=self.params.BATCH_SIZE
+        )
+        return eval_config
